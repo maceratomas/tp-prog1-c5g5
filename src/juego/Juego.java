@@ -92,15 +92,21 @@ public class Juego extends InterfaceJuego {
 			proyectil= new Proyectil (mikasa.x, mikasa.y, mikasa.angulo);
 		}
 		if(proyectil!=null){
-		proyectil.dibujarse(entorno);
-		proyectil.disparar(mikasa, enemigos, entorno, obstaculos);
-		if(proyectil.colisionaBorde(ancho,altura)||proyectil.tocaObstaculo(obstaculos)){
-			proyectil=null;	
-		}
-		if(proyectil.colisionaEnemigos(enemigos)){
-			proyectil=null;
-			enemigos=null;
-		}
+			proyectil.dibujarse(entorno);
+			proyectil.disparar(mikasa, enemigos, entorno, obstaculos);
+			if(proyectil.colisionaBorde(ancho,altura)){
+				proyectil=null;
+				System.out.println("Toca borde");
+			}
+				
+			if((proyectil != null) && (proyectil.tocaObstaculo(obstaculos))){
+				proyectil=null;	
+				System.out.println("Toca casa");
+			}
+			if((proyectil != null) && (proyectil.colisionaEnemigos(enemigos))){
+				proyectil=null;
+				System.out.println("toca enemigo");
+			}
 		}
 
 		
