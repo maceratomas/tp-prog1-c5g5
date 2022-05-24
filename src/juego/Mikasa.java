@@ -16,6 +16,7 @@ public class Mikasa {
 	Color color= new Color(255,200,0);
 	double valorEnCos = this.x;
 	double valorEnSen = this.y;
+	int vidas=3;
 	
 	public Mikasa (double x, double y) {
 		this.x=x;
@@ -27,9 +28,9 @@ public class Mikasa {
 		entorno.dibujarRectangulo(x, y, ancho, alto, angulo, color);
 		
 //		if (entorno.estaPresionada(entorno.TECLA_ARRIBA))
-//			entorno.dibujarImagen(img1, this.x, this.y, this.angulo, 0.2);
+//			entorno.dibujarImagen(img1, this.x, this.y, 0, 0.2);
 //		else
-//			entorno.dibujarImagen(img1, this.x, this.y, this.angulo, 0.2);
+//			entorno.dibujarImagen(img1, this.x, this.y, 0, 0.2);
 	}
 	public boolean tocaObstaculoLadoDer(Obstaculos obstaculo, double valorEnCos, double valorEnSen) {
 		if((valorEnCos <= obstaculo.x+obstaculo.ancho+1.0) && (valorEnCos >= obstaculo.x+obstaculo.ancho-1)) {
@@ -51,7 +52,7 @@ public class Mikasa {
 	}
 	public boolean tocaObstaculoLadoAbajo(Obstaculos obstaculo, double valorEnCos, double valorEnSen) {
 		// no se si efectivamente hay que restarle el alto
-		// ¿no se si dibuja desde arriba?
+		// ï¿½no se si dibuja desde arriba?
 		if((valorEnSen <= obstaculo.y+obstaculo.alto+1) && (valorEnSen >= obstaculo.y+obstaculo.alto-1)) {
 			return true;
 		}
@@ -72,9 +73,9 @@ public class Mikasa {
 		}
 		return false;
 	}
-	public boolean tocaEnemigo(Enemigos e, double x, double y){
-		if((x+this.ancho/2 >= e.x-e.ancho/2) && (x-this.ancho/2 <= (e.x + e.ancho/2))
-				&& (y+this.alto/2 >= e.y-e.alto/2) && (y-this.alto/2 <= (e.y + e.alto/2))) {
+	public boolean tocaEnemigo(Enemigos e){
+		if((this.x+this.ancho/2 >= e.x-e.ancho/2) && (this.x-this.ancho/2 <= (e.x + e.ancho/2))
+				&& (this.y+this.alto/2 >= e.y-e.alto/2) && (this.y-this.alto/2 <= (e.y + e.alto/2))) {
 			return true;
 		}
 		return false;
@@ -92,7 +93,7 @@ public class Mikasa {
 		
 		if ((valorEnCos-this.ancho/2 > 0 && valorEnSen-this.alto/2 > 0) && 
 			(valorEnCos+this.ancho/2 < anchoPantalla && valorEnSen+this.alto/2 < alturaPantalla)&& 
-			!(tocaEnemigo(enemigo, valorEnCos, valorEnSen))) {
+			!(tocaEnemigo(enemigo))) {
 			if(tocaObstaculo(obstaculo, valorEnCos, valorEnSen)) {
 				//hay que rodear al objeto
 				// hago que suba solo en y, y en x para probar
@@ -116,7 +117,7 @@ public class Mikasa {
 		}
 	}
 	public void rotar() {
-		
+		this.angulo+=180;
 	}
 	
 	public double radianes(double grados)

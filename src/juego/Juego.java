@@ -17,6 +17,7 @@ public class Juego extends InterfaceJuego {
 	int altura = 600;
 	int ancho = 800;
 	boolean bigMikasa=false;
+	double tiempo=60;
 	public Juego() {
 		// Inicializa el objeto entorno
 		this.entorno = new Entorno(this, "AoT v0.1", ancho, altura);
@@ -40,6 +41,18 @@ public class Juego extends InterfaceJuego {
 	 * (ver el enunciado del TP para mayor detalle).
 	 */
 	public void tick() {
+
+		if((mikasa.vidas==0) || (tiempo<0)){
+			entorno.escribirTexto("GAME OVER", 340, 270);
+			return;
+		}
+
+		tiempo-=0.01;
+//  	Escrituras en pantalla
+
+		entorno.escribirTexto("Vidas de Mikasa= " + mikasa.vidas, 50, 50);
+		entorno.escribirTexto("Tiempo= " + (int)tiempo, 650, 50);
+
 //		instrucciones de Mikasa
 		mikasa.dibujarse(entorno);
 		
@@ -49,9 +62,19 @@ public class Juego extends InterfaceJuego {
 			bigMikasa=true;
 //			objetos=null;
 		}
-		if((mikasa.tocaEnemigo(enemigos, mikasa.valorEnCos, mikasa.valorEnSen))){
-			System.out.println("Hola");
-			enemigos=null;
+		if((mikasa.tocaEnemigo(enemigos))){
+			if(bigMikasa==false){
+				mikasa.vidas-=1;
+				mikasa.x+=50;
+				mikasa.y+=50;
+			}
+			else{
+				mikasa.alto=50;
+				mikasa.ancho=35;
+				mikasa.x+=50;
+				mikasa.y+=50;
+				bigMikasa=false;
+			}
 		}
 
 
@@ -79,6 +102,9 @@ public class Juego extends InterfaceJuego {
 		
 		if(entorno.estaPresionada(entorno.TECLA_SHIFT)&&entorno.estaPresionada(entorno.TECLA_IZQUIERDA))
 			mikasa.girar(mikasa.radianes(-2));
+
+		if((entorno.estaPresionada(entorno.TECLA_DERECHA)) && (entorno.estaPresionada(entorno.TECLA_IZQUIERDA)))
+			mikasa.rotar();
 //		instrucciones de enemigos
 		enemigos.dibujarse(entorno);
 //		movimiento de enemigos hacia Mikasa
