@@ -26,7 +26,7 @@ public class Juego extends InterfaceJuego {
 		mikasa= new Mikasa(400,400);
 		enemigos=new Enemigos(100,100);
 		objetos=new Objetos(250,200);
-		obstaculos=new Obstaculos(50,400);
+		obstaculos=new Obstaculos(200,400);
 		proyectil=null;
 		
 		entorno.escribirTexto("Enemigos asesinados"+ contadorDeAsesinatos, 30, altura-50);

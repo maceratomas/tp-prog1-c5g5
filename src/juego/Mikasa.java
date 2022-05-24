@@ -32,39 +32,27 @@ public class Mikasa {
 //		else
 //			entorno.dibujarImagen(img1, this.x, this.y, 0, 0.2);
 	}
-	public boolean tocaObstaculoLadoDer(Obstaculos obstaculo, double valorEnCos, double valorEnSen) {
-		if((valorEnCos <= obstaculo.x+obstaculo.ancho+1.0) && (valorEnCos >= obstaculo.x+obstaculo.ancho-1)) {
-			return true;
+	public String tocaObstaculo(Obstaculos obstaculo, double valorEnCos, double valorEnSen) {
+		int alto = obstaculo.alto;
+		int ancho = obstaculo.ancho;
+		
+		if((valorEnSen >= obstaculo.y - alto) && (valorEnSen <= (obstaculo.y + alto))){
+			if((valorEnCos <= obstaculo.x+ ancho +1.0) && (valorEnCos >= obstaculo.x+ ancho -1)) {
+				return "der";
+			}
+			if ((valorEnCos <= obstaculo.x+ ancho) && (valorEnCos >= obstaculo.x- ancho)) {
+				return "izq";
+			}
 		}
-		return false;
-	}
-	public boolean tocaObstaculoLadoIzq(Obstaculos obstaculo, double valorEnCos, double valorEnSen) {
-		if((valorEnCos <= obstaculo.x+1.0) && (valorEnCos >= obstaculo.x-1)) {
-			return true;
+		if ((valorEnCos >= obstaculo.x - ancho) && (valorEnCos <= (obstaculo.x + ancho))) {
+			if ((valorEnSen <= obstaculo.y-alto+1) && (valorEnSen >= obstaculo.y-obstaculo.alto-1)) {
+				return "arriba";
+			}
+			if ((valorEnSen <= obstaculo.y+alto+1) && (valorEnSen >= obstaculo.y+alto-1)) {
+				return "abajo";
+			}	
 		}
-		return false;
-	}
-	public boolean tocaObstaculoLadoArriba(Obstaculos obstaculo, double valorEnCos, double valorEnSen) {
-		if((valorEnSen <= obstaculo.y-obstaculo.alto+1) && (valorEnSen >= obstaculo.y-obstaculo.alto-1)) {
-			return true;
-		}
-		return false;
-	}
-	public boolean tocaObstaculoLadoAbajo(Obstaculos obstaculo, double valorEnCos, double valorEnSen) {
-		// no se si efectivamente hay que restarle el alto
-		// �no se si dibuja desde arriba?
-		if((valorEnSen <= obstaculo.y+obstaculo.alto+1) && (valorEnSen >= obstaculo.y+obstaculo.alto-1)) {
-			return true;
-		}
-		return false;
-	}
-	public boolean tocaObstaculo(Obstaculos obstaculo, double valorEnCos, double valorEnSen) {
-		// primero ve si se choca en el eje x, luego lo hace con el eje y
-		if((valorEnCos >= obstaculo.x-obstaculo.ancho) && (valorEnCos <= (obstaculo.x + obstaculo.ancho))
-				&& (valorEnSen >= obstaculo.y-obstaculo.alto) && (valorEnSen <= (obstaculo.y + obstaculo.alto))) {
-			return true;
-		}
-		return false;
+		return "";
 	}
 	public boolean tocaPocion(Objetos obj){
 		if((x+this.ancho/2 >= obj.x-obj.ancho/2) && (x-this.ancho/2 <= (obj.x + obj.ancho/2))
@@ -85,34 +73,26 @@ public class Mikasa {
 		double valorEnCos = this.x + Math.cos(this.angulo)*velocidad;
 		double valorEnSen = this.y + Math.sin(this.angulo)*velocidad;
 		double moverAlTocarObj = 0.5;
-		/*
-		 * si el valorEn da un numero fuera de los bordes, no avanza -- Se traba con el
-		 * --> centro del objeto, no con los bordes del objeto -- Falta que se trabe tmb con
-		 * --> los obstaculos
-		 */
+		String tocaObs = tocaObstaculo(obstaculo, valorEnCos, valorEnSen);
 		
 		if ((valorEnCos-this.ancho/2 > 0 && valorEnSen-this.alto/2 > 0) && 
 			(valorEnCos+this.ancho/2 < anchoPantalla && valorEnSen+this.alto/2 < alturaPantalla)&& 
-			!(tocaEnemigo(enemigo))) {
-			if(tocaObstaculo(obstaculo, valorEnCos, valorEnSen)) {
-				//hay que rodear al objeto
-				// hago que suba solo en y, y en x para probar
-				if(tocaObstaculoLadoDer(obstaculo,valorEnCos,valorEnSen)) {
-					System.out.println("Toca el lado derecho");
-					this.y += moverAlTocarObj;
-				} else if(tocaObstaculoLadoIzq(obstaculo,valorEnCos,valorEnSen)) {
-					System.out.println("toca el lado izq");
-					this.y += moverAlTocarObj;
-				} else if (tocaObstaculoLadoArriba(obstaculo,valorEnCos,valorEnSen)) {
-					System.out.println("toca el lado arriba");
-					this.x += moverAlTocarObj;
-				} else {
-					System.out.println("toca el lado abajo");
-					this.x += moverAlTocarObj;
-				}
-			} else {
+			!(tocaEnemigo(enemigo)) ) {
+			if (tocaObs == "") {
 				this.x = valorEnCos;
 				this.y = valorEnSen;
+			} else if (tocaObs == "der") {
+//				System.out.println("colisiona: der");
+				this.y+= moverAlTocarObj;
+			} else if (tocaObs == "izq") {
+//				System.out.println("colisiona: izq");
+				this.y+= moverAlTocarObj;
+			} else if (tocaObs == "arriba") {
+//				System.out.println("colisiona: arriba");
+				this.x+= moverAlTocarObj;
+			} else {
+//				System.out.println("colisiona: abajo");
+				this.x+= moverAlTocarObj;
 			}
 		}
 	}
