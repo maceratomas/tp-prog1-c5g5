@@ -1,26 +1,29 @@
 package juego;
 import java.awt.Color;
 import entorno.Entorno;
-
+import java.awt.Image;
+import entorno.Herramientas;
 
 public class Enemigos {
 //	variables de instancia
 	double x;
 	double y;
 	double angulo;
-	int ancho=75;
+	int ancho=60;
 	int alto=100;
 	Color color= new Color(255,0,0);
+	Image imagenEnemigo;
 //	objeto
 	
 	public Enemigos(double x, double y) {
 		this.x=x;
 		this.y=y;
-//		imagen
+		imagenEnemigo= Herramientas.cargarImagen("enemigo.png");
 	}
 	
 	public void dibujarse(Entorno entorno) {
-		entorno.dibujarRectangulo(x, y, ancho, alto, angulo, color);
+//		entorno.dibujarRectangulo(x, y, ancho, alto, angulo, color);
+		entorno.dibujarImagen(imagenEnemigo, this.x, this.y, this.angulo, 0.2);
 	}
 	public String tocaObstaculo(Obstaculos obstaculo, double valorEnCos, double valorEnSen) {
 		int alto = obstaculo.alto;

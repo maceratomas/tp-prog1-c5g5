@@ -12,26 +12,41 @@ public class Mikasa {
 	double angulo;
 	int alto=50;
 	int ancho=35;
-	Image img1;
+	Image mikasa;
+	Image mikasaCorriendo;
+	Image titanMikasa;
+	Image titanMikasaCorriendo;
 	Color color= new Color(255,200,0);
 	double valorEnCos = this.x;
 	double valorEnSen = this.y;
 	int vidas=3;
+	boolean bigMikasa=false;
 	
 	public Mikasa (double x, double y) {
 		this.x=x;
 		this.y=y;
-		img1 = Herramientas.cargarImagen("mikasa.png");
+		mikasa = Herramientas.cargarImagen("mikasaQuieta.png");
+		mikasaCorriendo = Herramientas.cargarImagen("mikasaCorriendo.png");
+		titanMikasa = Herramientas.cargarImagen("bigMikasa.png");
+		titanMikasaCorriendo = Herramientas.cargarImagen("bigMikasaCorriendo.png");
 	}
-	public void dibujarse(Entorno entorno)
-	{
-		entorno.dibujarRectangulo(x, y, ancho, alto, angulo, color);
+	public void dibujarse(Entorno entorno){
+//		entorno.dibujarRectangulo(x, y, ancho, alto, angulo, color);
 		
-//		if (entorno.estaPresionada(entorno.TECLA_ARRIBA))
-//			entorno.dibujarImagen(img1, this.x, this.y, 0, 0.2);
-//		else
-//			entorno.dibujarImagen(img1, this.x, this.y, 0, 0.2);
+		if(bigMikasa==true){
+			if(entorno.estaPresionada(entorno.TECLA_ARRIBA))
+				entorno.dibujarImagen(titanMikasaCorriendo, this.x, this.y, 0, 0.08);
+			else
+				entorno.dibujarImagen(titanMikasa, this.x, this.y, 0, 0.1);;
+		}
+		else{
+			if(entorno.estaPresionada(entorno.TECLA_ARRIBA))
+				entorno.dibujarImagen(mikasaCorriendo, this.x, this.y, 0, 0.5);
+			else
+				entorno.dibujarImagen(mikasa, this.x, this.y, 0, 0.5);
+		}
 	}
+	
 	public String tocaObstaculo(Obstaculos obstaculo, double valorEnCos, double valorEnSen) {
 		int alto = obstaculo.alto;
 		int ancho = obstaculo.ancho;

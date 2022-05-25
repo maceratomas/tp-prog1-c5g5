@@ -1,7 +1,9 @@
 package juego;
 import java.awt.Color;
 import entorno.Entorno;
+import entorno.Herramientas;
 import entorno.InterfaceJuego;
+import java.awt.Image;
 public class Juego extends InterfaceJuego {
 
 	// El objeto Entorno que controla el tiempo y otros
@@ -16,8 +18,9 @@ public class Juego extends InterfaceJuego {
 	int contadorDeAsesinatos=0;
 	int altura = 600;
 	int ancho = 800;
-	boolean bigMikasa=false;
 	double tiempo=60;
+	Image imagenDeFondo;
+
 	public Juego() {
 		// Inicializa el objeto entorno
 		this.entorno = new Entorno(this, "AoT v0.1", ancho, altura);
@@ -28,8 +31,8 @@ public class Juego extends InterfaceJuego {
 		objetos=new Objetos(250,200);
 		obstaculos=new Obstaculos(200,400);
 		proyectil=null;
-		
-		entorno.escribirTexto("Enemigos asesinados"+ contadorDeAsesinatos, 30, altura-50);
+		imagenDeFondo= Herramientas.cargarImagen("fondo.jpg");
+	
 		// Inicia el juego!
 		this.entorno.iniciar();
 	}
@@ -46,12 +49,13 @@ public class Juego extends InterfaceJuego {
 			entorno.escribirTexto("GAME OVER", 340, 270);
 			return;
 		}
-
+//  	Contador de tiempo
 		tiempo-=0.01;
-//  	Escrituras en pantalla
-
-		entorno.escribirTexto("Vidas de Mikasa= " + mikasa.vidas, 50, 50);
-		entorno.escribirTexto("Tiempo= " + (int)tiempo, 650, 50);
+//  	Cosas que aparecen en pantalla
+		entorno.dibujarImagen(imagenDeFondo, ancho/2, altura/2, 0, 01);
+		entorno.escribirTexto("Vidas de Mikasa= " + mikasa.vidas, 50, 20);
+		entorno.escribirTexto("Tiempo= " + (int)tiempo, 650, 20);
+		entorno.escribirTexto("Enemigos asesinados= "+ contadorDeAsesinatos, 320, 20);
 
 //		instrucciones de Mikasa
 		mikasa.dibujarse(entorno);
@@ -59,11 +63,11 @@ public class Juego extends InterfaceJuego {
 		if(mikasa.colisinaObjeto(objetos)){
 			mikasa.alto=70;
 			mikasa.ancho=55;
-			bigMikasa=true;
+			mikasa.bigMikasa=true;
 //			objetos=null;
 		}
 		if((mikasa.tocaEnemigo(enemigos))){
-			if(bigMikasa==false){
+			if(mikasa.bigMikasa==false){
 				mikasa.vidas-=1;
 				mikasa.x+=50;
 				mikasa.y+=50;
@@ -73,7 +77,7 @@ public class Juego extends InterfaceJuego {
 				mikasa.ancho=35;
 				mikasa.x+=50;
 				mikasa.y+=50;
-				bigMikasa=false;
+				mikasa.bigMikasa=false;
 			}
 		}
 
@@ -131,6 +135,7 @@ public class Juego extends InterfaceJuego {
 			}
 			if((proyectil != null) && (proyectil.colisionaEnemigos(enemigos))){
 				proyectil=null;
+				contadorDeAsesinatos+=1;
 				System.out.println("toca enemigo");
 			}
 		}

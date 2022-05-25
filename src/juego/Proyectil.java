@@ -1,6 +1,8 @@
 package juego;
 import entorno.Entorno;
+import entorno.Herramientas;
 import java.awt.Color;
+import java.awt.Image;
 public class Proyectil {
 	double x;
 	double y;
@@ -12,14 +14,18 @@ public class Proyectil {
 	Enemigos enemigos;
 	Entorno entorno;
 	Obstaculos obstaculos;
+	Image imagenProyectil;
 	public Proyectil (double x, double y, double angulo) {
 		this.x=x;
 		this.y=y;
 		this.angulo=angulo;
+		imagenProyectil= Herramientas.cargarImagen("proyectil.png");
 	}
 	
 	public void dibujarse(Entorno e) {
-		e.dibujarRectangulo(this.x, this.y, ancho, alto, this.angulo, color);}
+//		e.dibujarRectangulo(this.x, this.y, ancho, alto, this.angulo, color);
+		e.dibujarImagen(imagenProyectil, this.x, this.y, this.angulo, 0.02);
+		}
 	
 		public boolean colisionaEnemigos(Enemigos e) {
 			if((x+ancho/2>e.x-e.ancho/2)&&(x-ancho/2<e.x+e.ancho/2)
