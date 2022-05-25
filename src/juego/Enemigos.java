@@ -77,13 +77,13 @@ public class Enemigos {
 			this.y+= moverAlTocarObs;
 		} else if (tocaObs == "izq") {
 //			System.out.println("E: colisiona: izq");
-			this.y+= moverAlTocarObs;
+			this.y-= moverAlTocarObs;
 		} else if (tocaObs == "arriba") {
 //			System.out.println("E: colisiona: arriba");
 			this.x+= moverAlTocarObs;
 		} else {
 //			System.out.println("E: colisiona: abajo");
-			this.x+= moverAlTocarObs;
+			this.x-= moverAlTocarObs;
 		}
 		
 	}

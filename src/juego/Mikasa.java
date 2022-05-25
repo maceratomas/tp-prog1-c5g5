@@ -101,13 +101,13 @@ public class Mikasa {
 				this.y+= moverAlTocarObj;
 			} else if (tocaObs == "izq") {
 //				System.out.println("colisiona: izq");
-				this.y+= moverAlTocarObj;
+				this.y-= moverAlTocarObj;
 			} else if (tocaObs == "arriba") {
 //				System.out.println("colisiona: arriba");
 				this.x+= moverAlTocarObj;
 			} else {
 //				System.out.println("colisiona: abajo");
-				this.x+= moverAlTocarObj;
+				this.x-= moverAlTocarObj;
 			}
 		}
 	}
