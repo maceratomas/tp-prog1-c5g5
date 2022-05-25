@@ -108,7 +108,7 @@ public class Juego extends InterfaceJuego {
 //		instrucciones de enemigos
 		enemigos.dibujarse(entorno);
 //		movimiento de enemigos hacia Mikasa
-		enemigos.moverse(mikasa.x, mikasa.y);
+		enemigos.moverse(mikasa.x, mikasa.y, obstaculos);
 //		instrucciones de Objetos
 		objetos.dibujarse(entorno);
 //		instrucciones de Obstaculos
