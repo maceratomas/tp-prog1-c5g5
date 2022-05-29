@@ -28,7 +28,7 @@ public class Enemigos {
 	public String tocaObstaculo(Obstaculos obstaculo, double valorEnCos, double valorEnSen) {
 		int alto = obstaculo.alto;
 		int ancho = obstaculo.ancho;
-		// impacta con el centro del enemigo
+
 		if((valorEnSen >= obstaculo.y - alto) && (valorEnSen <= (obstaculo.y + alto))){
 			if((valorEnCos <= obstaculo.x+ ancho +1.0) && (valorEnCos >= obstaculo.x+ ancho -1)) {
 				return "der";
@@ -47,23 +47,40 @@ public class Enemigos {
 		}
 		return "";
 	}
+	public String dondeTocaEnemigo(Mikasa mikasa) {
+		if(((this.y + this.alto/2) >= mikasa.y) && ((this.y - this.alto/2) <= mikasa.y)) {
+			if((this.x + this.ancho/2) <= (mikasa.x - mikasa.ancho/2)) {
+				return "der";
+			}
+			if((this.x - this.ancho/2) >= (mikasa.x + mikasa.ancho/2)) {
+				return "izq";
+			}
+		}
+		if(((this.x + this.ancho/2) >= mikasa.x) && ((this.x - this.ancho/2 <= mikasa.x))) {
+			// --> segun el orden, funciona el de arriba o el de abajo, por eso lo comento para subirlo
+			if((this.y + this.alto) >= (mikasa.y - mikasa.alto/2)) {
+				return "abajo";
+			}
+//			if((this.y - this.alto) <= (mikasa.y + mikasa.alto/2)) {
+//				return "arriba";
+//			}
+		}
+		
+		return "";
+	}
 	
 	public void moverse(double x, double y, Obstaculos obstaculo) {
 		double movEnX, movEnY;
 		double moverAlTocarObs = 1.0;
 		
 		if(this.x<x) {
-//			this.x+=Math.cos(this.angulo)*0.5;
 			movEnX = this.x + Math.cos(this.angulo)*0.5;
-		} else {	
-//			this.x+=Math.cos(this.angulo)*(-0.5);
+		} else {
 			movEnX = this.x + Math.cos(this.angulo)*(-0.5);
 		}
 		if (this.y<y) {
-//			this.y+=Math.cos(this.angulo)*0.5;
 			movEnY = this.y + Math.cos(this.angulo)*0.5;
 		}else {
-//			this.y+=Math.cos(this.angulo)*(-0.5);
 			movEnY = this.y + Math.cos(this.angulo)*(-0.5);
 		}
 		
@@ -73,16 +90,12 @@ public class Enemigos {
 			this.x = movEnX;
 			this.y = movEnY;
 		} else if (tocaObs == "der") {
-//			System.out.println("E: colisiona: der");
 			this.y+= moverAlTocarObs;
 		} else if (tocaObs == "izq") {
-//			System.out.println("E: colisiona: izq");
 			this.y-= moverAlTocarObs;
 		} else if (tocaObs == "arriba") {
-//			System.out.println("E: colisiona: arriba");
 			this.x+= moverAlTocarObs;
 		} else {
-//			System.out.println("E: colisiona: abajo");
 			this.x-= moverAlTocarObs;
 		}
 		

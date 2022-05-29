@@ -26,8 +26,8 @@ public class Juego extends InterfaceJuego {
 		this.entorno = new Entorno(this, "AoT v0.1", ancho, altura);
 		
 		// Inicializar lo que haga falta para el juego
-		mikasa= new Mikasa(400,400);
-		enemigos=new Enemigos(100,100);
+		mikasa= new Mikasa(400,200);
+		enemigos=new Enemigos(400,400);
 		objetos=new Objetos(250,200);
 		obstaculos=new Obstaculos(200,400);
 		proyectil=null;
@@ -66,11 +66,30 @@ public class Juego extends InterfaceJuego {
 			mikasa.bigMikasa=true;
 //			objetos=null;
 		}
-		if((mikasa.tocaEnemigo(enemigos))){
+		if(mikasa.tocaEnemigo(enemigos)) {
+			double moverAlTocarObj = 100.0;
+			String tocaEnemigo = enemigos.dondeTocaEnemigo(mikasa);
+			System.out.println("toca enemigo : "+tocaEnemigo);
+			
 			if(mikasa.bigMikasa==false){
 				mikasa.vidas-=1;
-				mikasa.x+=50;
-				mikasa.y+=50;
+//				System.out.println("entro al if lado:");
+				if (tocaEnemigo == "der") {
+					mikasa.x += moverAlTocarObj;
+//					System.out.println("der");
+				}
+				if (tocaEnemigo == "izq") {
+					mikasa.x -= moverAlTocarObj;
+//					System.out.println("izq");
+				}
+				if (tocaEnemigo == "arriba") {
+					mikasa.y -= moverAlTocarObj;
+//					System.out.println("arriba");
+				}
+				if (tocaEnemigo == "abajo"){
+					mikasa.y += moverAlTocarObj;
+//					System.out.println("abajo");
+				}
 			}
 			else{
 				mikasa.alto=50;
@@ -80,7 +99,6 @@ public class Juego extends InterfaceJuego {
 				mikasa.bigMikasa=false;
 			}
 		}
-
 
 //		movimiento
 		if (entorno.estaPresionada(entorno.TECLA_DERECHA))

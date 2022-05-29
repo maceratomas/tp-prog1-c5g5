@@ -97,16 +97,12 @@ public class Mikasa {
 				this.x = valorEnCos;
 				this.y = valorEnSen;
 			} else if (tocaObs == "der") {
-//				System.out.println("colisiona: der");
 				this.y+= moverAlTocarObj;
 			} else if (tocaObs == "izq") {
-//				System.out.println("colisiona: izq");
 				this.y-= moverAlTocarObj;
 			} else if (tocaObs == "arriba") {
-//				System.out.println("colisiona: arriba");
 				this.x+= moverAlTocarObj;
 			} else {
-//				System.out.println("colisiona: abajo");
 				this.x-= moverAlTocarObj;
 			}
 		}
