@@ -69,14 +69,15 @@ public class Juego extends InterfaceJuego {
 		}
 		Random random = new Random();
 		int segJuego = (int) ((System.nanoTime())/(1000000000*10));
-		if(segJuego%3==0) {
+		if((segJuego%10==0) && (Enemigos.noMasEnemigos(enemigos)==false)) {
 			for(int i=0; i<enemigos.length; i++) {
 				if(enemigos[i]==null) {
 					enemigos[i] = new Enemigos(random.nextInt(0,ancho) , random.nextInt(0,altura));
 				}
 			}
 		}
-		if(contadorDeAsesinatos==10){
+
+		if(Enemigos.noMasEnemigos(enemigos)){
 			entorno.escribirTexto("Victoria derrotaste a todos los titanes", 320, 270);
 			return;
 		}

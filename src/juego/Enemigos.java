@@ -140,5 +140,23 @@ public class Enemigos {
 		}	
 		return -1;	
 	}
+
+	public static boolean noMasEnemigos(Enemigos [] enemigos){
+		Enemigos e;
+		int cont=0;
+		for(int i=0; i<enemigos.length ;i++) {
+			e = enemigos[i];
+			if(e==null){
+				cont++;
+			}
+		}
+		if(cont==enemigos.length){
+			return true;
+		}
+		else{
+			cont=0;
+			return false;
+		}
+	}
 	
 }
