@@ -76,12 +76,16 @@ public class Mikasa {
 		}
 		return false;
 	}
-	public boolean tocaEnemigo(Enemigos e){
-		if((this.x+this.ancho/2 >= e.x-e.ancho/2) && (this.x-this.ancho/2 <= (e.x + e.ancho/2))
+	public int tocaEnemigo(Enemigos[] enemigos){
+		Enemigos e;
+		for(int i=0; i<enemigos.length ;i++) {
+			e = enemigos[i];
+			if((this.x+this.ancho/2 >= e.x-e.ancho/2) && (this.x-this.ancho/2 <= (e.x + e.ancho/2))
 				&& (this.y+this.alto/2 >= e.y-e.alto/2) && (this.y-this.alto/2 <= (e.y + e.alto/2))) {
-			return true;
+				return i;
+			}
 		}
-		return false;
+		return -1;
 	}
 	public int indiceCadenaEnArreglo(String[] arr, String cadena) {
 		for(int i=0; i<arr.length ;i++) {
@@ -91,7 +95,7 @@ public class Mikasa {
 		}
 		return -1;
 	}
-	public void mover(int anchoPantalla, int alturaPantalla, double velocidad, Obstaculos[] obstaculos, Enemigos enemigo ) {
+	public void mover(int anchoPantalla, int alturaPantalla, double velocidad, Obstaculos[] obstaculos, Enemigos[] enemigos) {
 		double valorEnCos = this.x + Math.cos(this.angulo)*velocidad;
 		double valorEnSen = this.y + Math.sin(this.angulo)*velocidad;
 		double moverAlTocarObj = 0.5;
@@ -102,7 +106,7 @@ public class Mikasa {
 		
 		if ((valorEnCos-this.ancho/2 > 0 && valorEnSen-this.alto/2 > 0) && 
 			(valorEnCos+this.ancho/2 < anchoPantalla && valorEnSen+this.alto/2 < alturaPantalla)&& 
-			!(tocaEnemigo(enemigo)) ) {
+			(tocaEnemigo(enemigos) == -1)) {
 			if (indiceCadenaEnArreglo(tocaObs, "abajo") != -1) {
 				this.x-= moverAlTocarObj;
 //				tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";

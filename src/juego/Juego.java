@@ -11,7 +11,7 @@ public class Juego extends InterfaceJuego {
 	private Entorno entorno;
 	Extras extras;
 	Mikasa mikasa;
-	Enemigos enemigos;
+	Enemigos[] enemigos = new Enemigos[5];
 	Objetos objetos;
 	Obstaculos[] obstaculos = new Obstaculos[5];
 	Proyectil proyectil;
@@ -23,8 +23,8 @@ public class Juego extends InterfaceJuego {
 	double tiempo=60;
 	Image imagenDeFondo;
 	Random numero=new Random();
-	int xEnemigo= numero.nextInt(ancho);
-	int yEnemigo=numero.nextInt(altura);
+//	int xEnemigo= numero.nextInt(ancho);
+//	int yEnemigo=numero.nextInt(altura);
 	int xObs=numero.nextInt(ancho);
 	int yObs=numero.nextInt(altura);
 	int xObj=numero.nextInt(ancho);
@@ -37,7 +37,7 @@ public class Juego extends InterfaceJuego {
 		
 		// Inicializar lo que haga falta para el juego
 		mikasa= new Mikasa(ancho/2,altura/2);
-		enemigos=new Enemigos(xEnemigo,yEnemigo);
+//		enemigos=new Enemigos(xEnemigo,yEnemigo);
 		objetos=null;
 		proyectil=null;
 		imagenDeFondo= Herramientas.cargarImagen("fondo.jpg");
@@ -45,8 +45,15 @@ public class Juego extends InterfaceJuego {
 		for(int i=0; i<5; i++) {
 			obstaculos[i] = new Obstaculos(random.nextInt(0,ancho) , random.nextInt(0,altura));
 		}
+<<<<<<< Updated upstream
 
 		Herramientas.loop("MusicaFondo.aiff");
+=======
+		for(int i=0; i<2; i++) {
+			enemigos[i] = new Enemigos(random.nextInt(0,ancho) , random.nextInt(0,altura));
+		}
+	
+>>>>>>> Stashed changes
 		// Inicia el juego!
 		this.entorno.iniciar();
 	}
@@ -99,9 +106,9 @@ public class Juego extends InterfaceJuego {
 			yObj=numero.nextInt(altura);
 			Herramientas.play("TomarPocion.aiff");
 		}
-		if(mikasa.tocaEnemigo(enemigos)) {
+		if(mikasa.tocaEnemigo(enemigos) != -1) {
 			double moverAlTocarObj = 100.0;
-			String tocaEnemigo = enemigos.dondeTocaEnemigo(mikasa);
+			String tocaEnemigo = enemigos[mikasa.tocaEnemigo(enemigos)].dondeTocaEnemigo(mikasa);
 			System.out.println("toca enemigo : "+tocaEnemigo);
 			
 			if(mikasa.bigMikasa==false){
@@ -164,9 +171,19 @@ public class Juego extends InterfaceJuego {
 		if((entorno.estaPresionada(entorno.TECLA_DERECHA)) && (entorno.estaPresionada(entorno.TECLA_IZQUIERDA)))
 			mikasa.rotar();
 //		instrucciones de enemigos
-		enemigos.dibujarse(entorno);
+		for (int i=0; i<enemigos.length ;i++) {
+			entorno.dibujarImagen(enemigos[i].imagenEnemigo, enemigos[i].x, enemigos[i].y, 0, 0.13);
+		}
 //		movimiento de enemigos hacia Mikasa
+<<<<<<< Updated upstream
 		enemigos.moverse(mikasa.x, mikasa.y, obstaculos);
+=======
+		for (int i=0; i<enemigos.length ;i++) {
+			enemigos[i].moverse(mikasa.x, mikasa.y, obstaculos);
+		}
+//		instrucciones de Objetos
+		objetos.dibujarse(entorno);
+>>>>>>> Stashed changes
 //		instrucciones de Obstaculos
 		for (int i=0; i<obstaculos.length ;i++) {
 			entorno.dibujarImagen(obstaculos[i].imagenCasa, obstaculos[i].x, obstaculos[i].y, 0, 0.13);
@@ -178,7 +195,7 @@ public class Juego extends InterfaceJuego {
 		}
 		if(proyectil!=null){
 			proyectil.dibujarse(entorno);
-			proyectil.disparar(mikasa, enemigos, entorno, obstaculos);
+			proyectil.disparar();
 			if(proyectil.colisionaBorde(ancho,altura)){
 				proyectil=null;
 				System.out.println("Toca borde");

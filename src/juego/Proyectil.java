@@ -27,10 +27,14 @@ public class Proyectil {
 		e.dibujarImagen(imagenProyectil, this.x, this.y+10, this.angulo, 0.02);
 		}
 	
-		public boolean colisionaEnemigos(Enemigos e) {
-			if((x+ancho/2>e.x-e.ancho/2)&&(x-ancho/2<e.x+e.ancho/2)
-				&&(y+alto/2>e.y-e.alto/2)&&(y-alto/2<e.y+e.alto/2)){
-				return true;
+		public boolean colisionaEnemigos(Enemigos[] enemigos) {
+			Enemigos e;
+			for(int i=0; i<enemigos.length ;i++) {
+				e = enemigos[i];
+				if((x+ancho/2>e.x-e.ancho/2)&&(x-ancho/2<e.x+e.ancho/2)
+						&&(y+alto/2>e.y-e.alto/2)&&(y-alto/2<e.y+e.alto/2)){
+					return true;
+				}
 			}
 			return false;	
 		}
@@ -51,7 +55,7 @@ public class Proyectil {
 			return false;	
 		}
 	
-	public void disparar(Mikasa m, Enemigos e, Entorno ent, Obstaculos[] obs) {
+	public void disparar() {
 		this.x += Math.cos(this.angulo)*2.5;
 		this.y += Math.sin(this.angulo)*2.5;	
 		}	

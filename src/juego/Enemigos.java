@@ -20,11 +20,6 @@ public class Enemigos {
 		this.y=y;
 		imagenEnemigo= Herramientas.cargarImagen("enemigo.png");
 	}
-	
-	public void dibujarse(Entorno entorno) {
-//		entorno.dibujarRectangulo(x, y, ancho, alto, angulo, color);
-		entorno.dibujarImagen(imagenEnemigo, this.x, this.y, this.angulo, 0.2);
-	}
 	public String tocaObstaculo(Obstaculos obstaculo, double valorEnCos, double valorEnSen) {
 		int alto = obstaculo.alto;
 		int ancho = obstaculo.ancho;
