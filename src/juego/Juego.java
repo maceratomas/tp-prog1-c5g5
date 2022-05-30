@@ -45,15 +45,12 @@ public class Juego extends InterfaceJuego {
 		for(int i=0; i<5; i++) {
 			obstaculos[i] = new Obstaculos(random.nextInt(0,ancho) , random.nextInt(0,altura));
 		}
-<<<<<<< Updated upstream
 
 		Herramientas.loop("MusicaFondo.aiff");
-=======
 		for(int i=0; i<2; i++) {
 			enemigos[i] = new Enemigos(random.nextInt(0,ancho) , random.nextInt(0,altura));
 		}
-	
->>>>>>> Stashed changes
+
 		// Inicia el juego!
 		this.entorno.iniciar();
 	}
@@ -175,15 +172,11 @@ public class Juego extends InterfaceJuego {
 			entorno.dibujarImagen(enemigos[i].imagenEnemigo, enemigos[i].x, enemigos[i].y, 0, 0.13);
 		}
 //		movimiento de enemigos hacia Mikasa
-<<<<<<< Updated upstream
-		enemigos.moverse(mikasa.x, mikasa.y, obstaculos);
-=======
 		for (int i=0; i<enemigos.length ;i++) {
 			enemigos[i].moverse(mikasa.x, mikasa.y, obstaculos);
 		}
 //		instrucciones de Objetos
 		objetos.dibujarse(entorno);
->>>>>>> Stashed changes
 //		instrucciones de Obstaculos
 		for (int i=0; i<obstaculos.length ;i++) {
 			entorno.dibujarImagen(obstaculos[i].imagenCasa, obstaculos[i].x, obstaculos[i].y, 0, 0.13);
