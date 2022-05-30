@@ -23,7 +23,6 @@ public class Arma {
     }
 
     public void dibujarse (Entorno entorno){
- //       entorno.dibujarRectangulo(this.x, this.y, ancho, alto, this.angulo, color);
         entorno.dibujarImagen(arma, this.x+2, this.y+10, this.angulo, 0.1);
     }
 

@@ -12,7 +12,6 @@ public class Enemigos {
 	int alto=100;
 	Color color= new Color(255,0,0);
 	Image imagenEnemigo;
-//	objeto
 	
 	public Enemigos(double x, double y) {
 		this.x=x;
@@ -58,7 +57,7 @@ public class Enemigos {
 			}
 		}
 		if(((this.x + this.ancho/2) >= mikasa.x) && ((this.x - this.ancho/2 <= mikasa.x))) {
-			// --> segun el orden, funciona el de arriba o el de abajo, por eso lo comento para subirlo
+			// --> segun el orden, funciona el de arriba o el de abajo
 			if((this.y + this.alto) >= (mikasa.y - mikasa.alto/2)) {
 				return "abajo";
 			}
@@ -96,35 +95,17 @@ public class Enemigos {
 		
 		if (indiceCadenaEnArreglo(tocaObs, "abajo") != -1) {
 			this.x-= moverAlTocarObs;
-//			tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
 		} else if ((indiceCadenaEnArreglo(tocaObs, "der") != -1)) {
 			this.y+= moverAlTocarObs;
-//			tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
 		} else if ((indiceCadenaEnArreglo(tocaObs, "izq") != -1)) {
 			this.y-= moverAlTocarObs;
-//			tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
 		} else if ((indiceCadenaEnArreglo(tocaObs, "arriba") != -1)) {
 			this.x-= moverAlTocarObs;
-//			tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
 		} else {
 			this.x = movEnX;
 			this.y = movEnY;
 		}
 		
-	}
-
-	public static int esColisionado(Proyectil p, Enemigos[] enemigos) {
-		Enemigos e;
-		for(int i=0; i<enemigos.length ;i++) {
-			e = enemigos[i];
-			if(e!=null){
-				if((p.x+p.ancho/2>e.x-e.ancho/2)&&(p.x-p.ancho/2<e.x+e.ancho/2)
-						&&(p.y+p.alto/2>e.y-e.alto/2)&&(p.y-p.alto/2<e.y+e.alto/2)){
-					return i;
-				}
-			}
-		}	
-		return -1;	
 	}
 
 	public static int golpeadoBigMikasa(Mikasa m, Enemigos[] enemigos) {
@@ -195,5 +176,18 @@ public class Enemigos {
 			}
 		}
 	return false;
+	}
+	public static int esColisionado(Proyectil p, Enemigos[] enemigos) {
+		Enemigos e;
+		for(int i=0; i<enemigos.length ;i++) {
+			e = enemigos[i];
+			if(e!=null){
+				if((p.x+p.ancho/2>e.x-e.ancho/2)&&(p.x-p.ancho/2<e.x+e.ancho/2)
+						&&(p.y+p.alto/2>e.y-e.alto/2)&&(p.y-p.alto/2<e.y+e.alto/2)){
+					return i;
+				}
+			}
+		}	
+		return -1;	
 	}
 }

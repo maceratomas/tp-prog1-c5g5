@@ -110,16 +110,12 @@ public class Mikasa {
 			(tocaEnemigo(enemigos) == -1)) {
 			if (indiceCadenaEnArreglo(tocaObs, "abajo") != -1) {
 				this.x-= moverAlTocarObj;
-//				tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
 			} else if ((indiceCadenaEnArreglo(tocaObs, "der") != -1)) {
 				this.y+= moverAlTocarObj;
-//				tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
 			} else if ((indiceCadenaEnArreglo(tocaObs, "izq") != -1)) {
 				this.y-= moverAlTocarObj;
-//				tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
 			} else if ((indiceCadenaEnArreglo(tocaObs, "arriba") != -1)) {
 				this.x+= moverAlTocarObj;
-//				tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
 			} else {
 				this.x = valorEnCos;
 				this.y = valorEnSen;
