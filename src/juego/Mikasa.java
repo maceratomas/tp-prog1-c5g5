@@ -19,7 +19,7 @@ public class Mikasa {
 	Color color= new Color(255,200,0);
 	double valorEnCos = this.x;
 	double valorEnSen = this.y;
-	int vidas=3;
+	int vidas=300;
 	boolean bigMikasa=false;
 	
 	public Mikasa (double x, double y) {
@@ -31,7 +31,6 @@ public class Mikasa {
 		titanMikasaCorriendo = Herramientas.cargarImagen("bigMikasaCorriendo.png");
 	}
 	public void dibujarse(Entorno entorno){
-//		entorno.dibujarRectangulo(x, y, ancho, alto, angulo, color);
 		
 		if(bigMikasa==true){
 			if(entorno.estaPresionada(entorno.TECLA_ARRIBA))

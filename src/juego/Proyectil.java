@@ -23,7 +23,6 @@ public class Proyectil {
 	}
 	
 	public void dibujarse(Entorno e) {
-//		e.dibujarRectangulo(this.x, this.y, ancho, alto, this.angulo, color);
 		e.dibujarImagen(imagenProyectil, this.x, this.y+10, this.angulo, 0.02);
 		}
 	

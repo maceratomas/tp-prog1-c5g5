@@ -1,5 +1,4 @@
 package juego;
-import java.awt.Color;
 import entorno.Entorno;
 import entorno.Herramientas;
 import entorno.InterfaceJuego;
@@ -16,28 +15,22 @@ public class Juego extends InterfaceJuego {
 	Obstaculos[] obstaculos = new Obstaculos[5];
 	Proyectil proyectil;
 	Arma arma;
-	Color colorCartel=new Color(255,0,255);;
 	int contadorDeAsesinatos=0;
 	int altura = 600;
 	int ancho = 800;
 	double tiempo=60;
 	Image imagenDeFondo;
 	Random numero=new Random();
-//	int xEnemigo= numero.nextInt(ancho);
-//	int yEnemigo=numero.nextInt(altura);
-	int xObs=numero.nextInt(ancho);
-	int yObs=numero.nextInt(altura);
 	int xObj=numero.nextInt(ancho);
 	int yObj=numero.nextInt(altura);
 	boolean crearObjeto=false;
 
 	public Juego() {
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "AoT v0.1", ancho, altura);
+		this.entorno = new Entorno(this, "AoT v1.0", ancho, altura);
 		
 		// Inicializar lo que haga falta para el juego
 		mikasa= new Mikasa(ancho/2,altura/2);
-//		enemigos=new Enemigos(xEnemigo,yEnemigo);
 		objetos=null;
 		proyectil=null;
 		imagenDeFondo= Herramientas.cargarImagen("fondo.jpg");
@@ -68,7 +61,7 @@ public class Juego extends InterfaceJuego {
 	 * (ver el enunciado del TP para mayor detalle).
 	 */
 	public void tick() {
-
+//		Fin del juego perdiendo
 		if((mikasa.vidas==0) || (tiempo<0)){
 			entorno.escribirTexto("GAME OVER", 340, 270);
 			return;
@@ -82,7 +75,7 @@ public class Juego extends InterfaceJuego {
 				}
 			}
 		}
-
+// 		Fin del juego ganando
 		if(Enemigos.noMasEnemigos(enemigos)){
 			entorno.escribirTexto("Victoria derrotaste a todos los titanes", 320, 270);
 			return;
@@ -99,12 +92,10 @@ public class Juego extends InterfaceJuego {
 		if((mikasa.bigMikasa==false) && ((int) tiempo%10==0)){
 			crearObjeto=true;
 		}
-
 		if(crearObjeto){
 			objetos=new Objetos(xObj,yObj);
 			objetos.dibujarse(entorno);
-		}
-		
+		}	
 //		instrucciones de Mikasa
 		mikasa.dibujarse(entorno);
 		
@@ -193,9 +184,11 @@ public class Juego extends InterfaceJuego {
 //		movimiento de enemigos hacia Mikasa
 		for (int i=0; i<enemigos.length ;i++) {
 			if(enemigos[i]!=null){
-				enemigos[i].moverse(mikasa.x, mikasa.y, obstaculos);
+				if(enemigos[i].colisionan(enemigos)==false){
+					enemigos[i].moverse(mikasa.x, mikasa.y, obstaculos);
+				}
+			}
 		}
-	}
 
 //		instrucciones de Obstaculos
 		for (int i=0; i<obstaculos.length ;i++) {
@@ -228,6 +221,7 @@ public class Juego extends InterfaceJuego {
 				System.out.println("toca enemigo");
 			}
 		}
+//		Dibujo del arma
 		if(mikasa.bigMikasa==false){
 		arma= new Arma(mikasa.x, mikasa.y, mikasa.angulo);
 		arma.dibujarse(entorno);

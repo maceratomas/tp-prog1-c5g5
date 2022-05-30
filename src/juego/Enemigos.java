@@ -82,14 +82,14 @@ public class Enemigos {
 		double moverAlTocarObs = 1.0;
 		
 		if(this.x<x) {
-			movEnX = this.x + Math.cos(this.angulo)*0.2;
+			movEnX = this.x + Math.cos(this.angulo)*0.3;
 		} else {
-			movEnX = this.x + Math.cos(this.angulo)*(-0.2);
+			movEnX = this.x + Math.cos(this.angulo)*(-0.3);
 		}
 		if (this.y<y) {
-			movEnY = this.y + Math.cos(this.angulo)*0.2;
+			movEnY = this.y + Math.cos(this.angulo)*0.3;
 		}else {
-			movEnY = this.y + Math.cos(this.angulo)*(-0.2);
+			movEnY = this.y + Math.cos(this.angulo)*(-0.3);
 		}
 		
 		String[] tocaObs = tocaAlgunObstaculo(obstaculos, movEnX, movEnY);
@@ -158,7 +158,6 @@ public class Enemigos {
 			return false;
 		}
 	}
-	
 	public boolean seSuperpone(Enemigos[] enemigos, Mikasa mikasa, Obstaculos[] obstaculos) {
 		for(int i=0; i<obstaculos.length ;i++) {
 			if(((obstaculos[i].x + obstaculos[i].ancho/2) >= (this.x - this.ancho/2))
@@ -183,5 +182,18 @@ public class Enemigos {
 		}
 		return false;
 	}
-	
+
+	public boolean colisionan(Enemigos [] enemigos){
+		for(int i=0; i<enemigos.length ;i++) {
+			if(enemigos[i] != null) {
+				if(((enemigos[i].x + enemigos[i].ancho/2) > (this.x - this.ancho/2))
+						&& ((this.x + this.ancho/2)<(enemigos[i].x - enemigos[i].ancho/2))
+						&& ((this.y + this.alto/2)>(enemigos[i].y - enemigos[i].alto/2))
+						&& ((this.y - this.alto/2)<(enemigos[i].y + enemigos[i].alto/2))) {				
+					return true;
+				}
+			}
+		}
+	return false;
+	}
 }
