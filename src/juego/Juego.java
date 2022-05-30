@@ -14,6 +14,7 @@ public class Juego extends InterfaceJuego {
 	Objetos objetos;
 	Obstaculos obstaculos;
 	Proyectil proyectil;
+	Arma arma;
 	Color colorCartel=new Color(255,0,255);;
 	int contadorDeAsesinatos=0;
 	int altura = 600;
@@ -32,6 +33,7 @@ public class Juego extends InterfaceJuego {
 		obstaculos=new Obstaculos(200,400);
 		proyectil=null;
 		imagenDeFondo= Herramientas.cargarImagen("fondo.jpg");
+		
 	
 		// Inicia el juego!
 		this.entorno.iniciar();
@@ -47,6 +49,11 @@ public class Juego extends InterfaceJuego {
 
 		if((mikasa.vidas==0) || (tiempo<0)){
 			entorno.escribirTexto("GAME OVER", 340, 270);
+			return;
+		}
+
+		if(contadorDeAsesinatos==10){
+			entorno.escribirTexto("Victoria derrotaste a todos los titanes", 320, 270);
 			return;
 		}
 //  	Contador de tiempo
@@ -136,7 +143,7 @@ public class Juego extends InterfaceJuego {
 //		instrucciones de Obstaculos
 		obstaculos.dibujarse(entorno);
 //		instrucciones de Proyectil
-		if(entorno.estaPresionada(entorno.TECLA_ESPACIO)) {
+		if((entorno.estaPresionada(entorno.TECLA_ESPACIO)) && (mikasa.bigMikasa==false)) {
 			proyectil= new Proyectil (mikasa.x, mikasa.y, mikasa.angulo);
 		}
 		if(proyectil!=null){
@@ -157,7 +164,11 @@ public class Juego extends InterfaceJuego {
 				System.out.println("toca enemigo");
 			}
 		}
-
+		if(mikasa.bigMikasa==false){
+		arma= new Arma(mikasa.x, mikasa.y, mikasa.angulo);
+		arma.dibujarse(entorno);
+		}
+	
 		
 	}
 		
