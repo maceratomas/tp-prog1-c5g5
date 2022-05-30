@@ -4,6 +4,7 @@ import entorno.Entorno;
 import entorno.Herramientas;
 import entorno.InterfaceJuego;
 import java.awt.Image;
+import java.util.Random;
 public class Juego extends InterfaceJuego {
 
 	// El objeto Entorno que controla el tiempo y otros
@@ -21,19 +22,26 @@ public class Juego extends InterfaceJuego {
 	int ancho = 800;
 	double tiempo=60;
 	Image imagenDeFondo;
+	Random numero=new Random();
+	int xEnemigo= numero.nextInt(ancho);
+	int yEnemigo=numero.nextInt(altura);
+	int xObs=numero.nextInt(ancho);
+	int yObs=numero.nextInt(altura);
+	int xObj=numero.nextInt(ancho);
+	int yObj=numero.nextInt(altura);
+	boolean crearObjeto=false;
 
 	public Juego() {
 		// Inicializa el objeto entorno
 		this.entorno = new Entorno(this, "AoT v0.1", ancho, altura);
 		
 		// Inicializar lo que haga falta para el juego
-		mikasa= new Mikasa(400,200);
-		enemigos=new Enemigos(400,400);
-		objetos=new Objetos(250,200);
-		obstaculos=new Obstaculos(200,400);
+		mikasa= new Mikasa(ancho/2,altura/2);
+		enemigos=new Enemigos(xEnemigo,yEnemigo);
+		objetos=null;
+		obstaculos=new Obstaculos(xObs,yObs);
 		proyectil=null;
-		imagenDeFondo= Herramientas.cargarImagen("fondo.jpg");
-		
+		imagenDeFondo= Herramientas.cargarImagen("fondo.jpg");		
 	
 		// Inicia el juego!
 		this.entorno.iniciar();
@@ -64,14 +72,26 @@ public class Juego extends InterfaceJuego {
 		entorno.escribirTexto("Tiempo= " + (int)tiempo, 650, 20);
 		entorno.escribirTexto("Enemigos asesinados= "+ contadorDeAsesinatos, 320, 20);
 
+//		instrucciones de Objetos
+		if((mikasa.bigMikasa==false) && ((int) tiempo%10==0)){
+			crearObjeto=true;
+		}
+
+		if(crearObjeto){
+			objetos=new Objetos(xObj,yObj);
+			objetos.dibujarse(entorno);
+		}
 //		instrucciones de Mikasa
 		mikasa.dibujarse(entorno);
 		
-		if(mikasa.colisinaObjeto(objetos)){
+		if((objetos!=null) && (mikasa.colisinaObjeto(objetos))){
 			mikasa.alto=70;
 			mikasa.ancho=55;
 			mikasa.bigMikasa=true;
-//			objetos=null;
+			objetos=null;
+			crearObjeto=false;
+			xObj=numero.nextInt(ancho);
+			yObj=numero.nextInt(altura);
 		}
 		if(mikasa.tocaEnemigo(enemigos)) {
 			double moverAlTocarObj = 100.0;
@@ -104,6 +124,7 @@ public class Juego extends InterfaceJuego {
 				mikasa.x+=50;
 				mikasa.y+=50;
 				mikasa.bigMikasa=false;
+				contadorDeAsesinatos+=1;
 			}
 		}
 
@@ -138,8 +159,6 @@ public class Juego extends InterfaceJuego {
 		enemigos.dibujarse(entorno);
 //		movimiento de enemigos hacia Mikasa
 		enemigos.moverse(mikasa.x, mikasa.y, obstaculos);
-//		instrucciones de Objetos
-		objetos.dibujarse(entorno);
 //		instrucciones de Obstaculos
 		obstaculos.dibujarse(entorno);
 //		instrucciones de Proyectil
@@ -164,11 +183,13 @@ public class Juego extends InterfaceJuego {
 				System.out.println("toca enemigo");
 			}
 		}
+//		Arma de mikasa
 		if(mikasa.bigMikasa==false){
 		arma= new Arma(mikasa.x, mikasa.y, mikasa.angulo);
 		arma.dibujarse(entorno);
 		}
 	
+
 		
 	}
 		
