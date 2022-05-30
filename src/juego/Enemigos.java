@@ -159,4 +159,29 @@ public class Enemigos {
 		}
 	}
 	
+	public boolean seSuperpone(Enemigos[] enemigos, Mikasa mikasa, Obstaculos[] obstaculos) {
+		for(int i=0; i<obstaculos.length ;i++) {
+			if(((obstaculos[i].x + obstaculos[i].ancho/2) >= (this.x - this.ancho/2))
+					&& ((this.x + this.ancho/2)<(obstaculos[i].x - obstaculos[i].ancho/2))
+					&& ((this.y + this.alto/2)>(obstaculos[i].y - obstaculos[i].alto/2))
+					&& ((this.y - this.alto/2)<(obstaculos[i].y + obstaculos[i].alto/2))) {				
+				return true;
+			}
+		}
+		if(enemigos.length>1) {
+			for(int i=0; i<enemigos.length ;i++) {
+				if(enemigos[i] != null) {
+					if(((enemigos[i].x + enemigos[i].ancho/2) > (this.x - this.ancho/2))
+							&& ((this.x + this.ancho/2)<(enemigos[i].x - enemigos[i].ancho/2))
+							&& ((this.y + this.alto/2)>(enemigos[i].y - enemigos[i].alto/2))
+							&& ((this.y - this.alto/2)<(enemigos[i].y + enemigos[i].alto/2))) {				
+						return true;
+					}
+				}
+			}
+			
+		}
+		return false;
+	}
+	
 }

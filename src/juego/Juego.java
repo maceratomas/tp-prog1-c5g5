@@ -49,6 +49,9 @@ public class Juego extends InterfaceJuego {
 		Herramientas.loop("MusicaFondo.aiff");
 		for(int i=0; i<5; i++) {
 			enemigos[i] = new Enemigos(random.nextInt(0,ancho) , random.nextInt(0,altura));
+			while(enemigos[i].seSuperpone(enemigos,mikasa,obstaculos)) {
+				enemigos[i] = new Enemigos(random.nextInt(0,ancho) , random.nextInt(0,altura));
+			}
 		}
 
 		// Inicia el juego!
