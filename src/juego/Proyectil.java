@@ -31,10 +31,12 @@ public class Proyectil {
 			Enemigos e;
 			for(int i=0; i<enemigos.length ;i++) {
 				e = enemigos[i];
-				if((x+ancho/2>e.x-e.ancho/2)&&(x-ancho/2<e.x+e.ancho/2)
-						&&(y+alto/2>e.y-e.alto/2)&&(y-alto/2<e.y+e.alto/2)){
-					return true;
+				if(e!=null){
+					if((x+ancho/2>e.x-e.ancho/2)&&(x-ancho/2<e.x+e.ancho/2)
+							&&(y+alto/2>e.y-e.alto/2)&&(y-alto/2<e.y+e.alto/2)){
+						return true;
 				}
+			}
 			}
 			return false;	
 		}

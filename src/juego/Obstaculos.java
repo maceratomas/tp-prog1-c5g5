@@ -15,5 +15,9 @@ public class Obstaculos {
 		this.y=y;
 		imagenCasa=Herramientas.cargarImagen("casa.png");
 	}
+
+	public void SeSuperponen(){
+		
+	}
 	
 }

@@ -1,6 +1,5 @@
 package juego;
 import java.awt.Color;
-import entorno.Entorno;
 import java.awt.Image;
 import entorno.Herramientas;
 
@@ -83,14 +82,14 @@ public class Enemigos {
 		double moverAlTocarObs = 1.0;
 		
 		if(this.x<x) {
-			movEnX = this.x + Math.cos(this.angulo)*0.5;
+			movEnX = this.x + Math.cos(this.angulo)*0.2;
 		} else {
-			movEnX = this.x + Math.cos(this.angulo)*(-0.5);
+			movEnX = this.x + Math.cos(this.angulo)*(-0.2);
 		}
 		if (this.y<y) {
-			movEnY = this.y + Math.cos(this.angulo)*0.5;
+			movEnY = this.y + Math.cos(this.angulo)*0.2;
 		}else {
-			movEnY = this.y + Math.cos(this.angulo)*(-0.5);
+			movEnY = this.y + Math.cos(this.angulo)*(-0.2);
 		}
 		
 		String[] tocaObs = tocaAlgunObstaculo(obstaculos, movEnX, movEnY);
@@ -112,6 +111,34 @@ public class Enemigos {
 			this.y = movEnY;
 		}
 		
+	}
+
+	public static int esColisionado(Proyectil p, Enemigos[] enemigos) {
+		Enemigos e;
+		for(int i=0; i<enemigos.length ;i++) {
+			e = enemigos[i];
+			if(e!=null){
+				if((p.x+p.ancho/2>e.x-e.ancho/2)&&(p.x-p.ancho/2<e.x+e.ancho/2)
+						&&(p.y+p.alto/2>e.y-e.alto/2)&&(p.y-p.alto/2<e.y+e.alto/2)){
+					return i;
+				}
+			}
+		}	
+		return -1;	
+	}
+
+	public static int golpeadoBigMikasa(Mikasa m, Enemigos[] enemigos) {
+		Enemigos e;
+		for(int i=0; i<enemigos.length ;i++) {
+			e = enemigos[i];
+			if(e!=null){
+				if((m.x+m.ancho/2>e.x-e.ancho/2)&&(m.x-m.ancho/2<e.x+e.ancho/2)
+						&&(m.y+m.alto/2>e.y-e.alto/2)&&(m.y-m.alto/2<e.y+e.alto/2)){
+					return i;
+				}
+			}
+		}	
+		return -1;	
 	}
 	
 }

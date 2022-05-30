@@ -47,7 +47,7 @@ public class Juego extends InterfaceJuego {
 		}
 
 		Herramientas.loop("MusicaFondo.aiff");
-		for(int i=0; i<2; i++) {
+		for(int i=0; i<5; i++) {
 			enemigos[i] = new Enemigos(random.nextInt(0,ancho) , random.nextInt(0,altura));
 		}
 
@@ -103,7 +103,7 @@ public class Juego extends InterfaceJuego {
 			yObj=numero.nextInt(altura);
 			Herramientas.play("TomarPocion.aiff");
 		}
-		if(mikasa.tocaEnemigo(enemigos) != -1) {
+		if(mikasa.tocaEnemigo(enemigos) > -1) {
 			double moverAlTocarObj = 100.0;
 			String tocaEnemigo = enemigos[mikasa.tocaEnemigo(enemigos)].dondeTocaEnemigo(mikasa);
 			System.out.println("toca enemigo : "+tocaEnemigo);
@@ -130,6 +130,8 @@ public class Juego extends InterfaceJuego {
 				}
 			}
 			else{
+				int i=Enemigos.golpeadoBigMikasa(mikasa, enemigos);
+				enemigos[i]=null;
 				mikasa.alto=50;
 				mikasa.ancho=35;
 				mikasa.x+=50;
@@ -169,14 +171,17 @@ public class Juego extends InterfaceJuego {
 			mikasa.rotar();
 //		instrucciones de enemigos
 		for (int i=0; i<enemigos.length ;i++) {
-			entorno.dibujarImagen(enemigos[i].imagenEnemigo, enemigos[i].x, enemigos[i].y, 0, 0.13);
+			if(enemigos[i]!=null){
+				entorno.dibujarImagen(enemigos[i].imagenEnemigo, enemigos[i].x, enemigos[i].y, 0, 0.13);
 		}
+	}
 //		movimiento de enemigos hacia Mikasa
 		for (int i=0; i<enemigos.length ;i++) {
-			enemigos[i].moverse(mikasa.x, mikasa.y, obstaculos);
+			if(enemigos[i]!=null){
+				enemigos[i].moverse(mikasa.x, mikasa.y, obstaculos);
 		}
-//		instrucciones de Objetos
-		objetos.dibujarse(entorno);
+	}
+
 //		instrucciones de Obstaculos
 		for (int i=0; i<obstaculos.length ;i++) {
 			entorno.dibujarImagen(obstaculos[i].imagenCasa, obstaculos[i].x, obstaculos[i].y, 0, 0.13);
@@ -200,7 +205,9 @@ public class Juego extends InterfaceJuego {
 				System.out.println("Toca casa");
 			}
 			if((proyectil != null) && (proyectil.colisionaEnemigos(enemigos))){
+				int i=Enemigos.esColisionado(proyectil, enemigos);
 				proyectil=null;
+				enemigos[i]=null;
 				Herramientas.play("GolpeEnemigo.aiff");
 				contadorDeAsesinatos+=1;
 				System.out.println("toca enemigo");

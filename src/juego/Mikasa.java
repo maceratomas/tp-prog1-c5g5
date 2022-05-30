@@ -78,12 +78,14 @@ public class Mikasa {
 	}
 	public int tocaEnemigo(Enemigos[] enemigos){
 		Enemigos e;
-		for(int i=0; i<enemigos.length ;i++) {
+		for(int i=0; i<5 ;i++) {
 			e = enemigos[i];
-			if((this.x+this.ancho/2 >= e.x-e.ancho/2) && (this.x-this.ancho/2 <= (e.x + e.ancho/2))
-				&& (this.y+this.alto/2 >= e.y-e.alto/2) && (this.y-this.alto/2 <= (e.y + e.alto/2))) {
-				return i;
+			if(e!=null){
+				if((this.x+this.ancho/2 >= e.x-e.ancho/2) && (this.x-this.ancho/2 <= (e.x + e.ancho/2))
+					&& (this.y+this.alto/2 >= e.y-e.alto/2) && (this.y-this.alto/2 <= (e.y + e.alto/2))) {
+					return i;
 			}
+		}
 		}
 		return -1;
 	}
