@@ -83,27 +83,41 @@ public class Mikasa {
 		}
 		return false;
 	}
-
-	public void mover(int anchoPantalla, int alturaPantalla, double velocidad, Obstaculos obstaculo, Enemigos enemigo ) {
+	public int indiceCadenaEnArreglo(String[] arr, String cadena) {
+		for(int i=0; i<arr.length ;i++) {
+			if(arr[i].equals(cadena)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	public void mover(int anchoPantalla, int alturaPantalla, double velocidad, Obstaculos[] obstaculos, Enemigos enemigo ) {
 		double valorEnCos = this.x + Math.cos(this.angulo)*velocidad;
 		double valorEnSen = this.y + Math.sin(this.angulo)*velocidad;
 		double moverAlTocarObj = 0.5;
-		String tocaObs = tocaObstaculo(obstaculo, valorEnCos, valorEnSen);
+		String[] tocaObs = new String[obstaculos.length];
+		for(int i=0; i < obstaculos.length; i++) {
+			tocaObs[i] = tocaObstaculo(obstaculos[i], valorEnCos, valorEnSen);
+		}
 		
 		if ((valorEnCos-this.ancho/2 > 0 && valorEnSen-this.alto/2 > 0) && 
 			(valorEnCos+this.ancho/2 < anchoPantalla && valorEnSen+this.alto/2 < alturaPantalla)&& 
 			!(tocaEnemigo(enemigo)) ) {
-			if (tocaObs == "") {
+			if (indiceCadenaEnArreglo(tocaObs, "abajo") != -1) {
+				this.x-= moverAlTocarObj;
+//				tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
+			} else if ((indiceCadenaEnArreglo(tocaObs, "der") != -1)) {
+				this.y+= moverAlTocarObj;
+//				tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
+			} else if ((indiceCadenaEnArreglo(tocaObs, "izq") != -1)) {
+				this.y-= moverAlTocarObj;
+//				tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
+			} else if ((indiceCadenaEnArreglo(tocaObs, "arriba") != -1)) {
+				this.x+= moverAlTocarObj;
+//				tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
+			} else {
 				this.x = valorEnCos;
 				this.y = valorEnSen;
-			} else if (tocaObs == "der") {
-				this.y+= moverAlTocarObj;
-			} else if (tocaObs == "izq") {
-				this.y-= moverAlTocarObj;
-			} else if (tocaObs == "arriba") {
-				this.x+= moverAlTocarObj;
-			} else {
-				this.x-= moverAlTocarObj;
 			}
 		}
 	}
@@ -128,5 +142,3 @@ public class Mikasa {
 		else {
 			return true;}}
 }
-
-

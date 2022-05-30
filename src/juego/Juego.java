@@ -13,7 +13,7 @@ public class Juego extends InterfaceJuego {
 	Mikasa mikasa;
 	Enemigos enemigos;
 	Objetos objetos;
-	Obstaculos obstaculos;
+	Obstaculos[] obstaculos = new Obstaculos[5];
 	Proyectil proyectil;
 	Arma arma;
 	Color colorCartel=new Color(255,0,255);;
@@ -39,9 +39,12 @@ public class Juego extends InterfaceJuego {
 		mikasa= new Mikasa(ancho/2,altura/2);
 		enemigos=new Enemigos(xEnemigo,yEnemigo);
 		objetos=null;
-		obstaculos=new Obstaculos(xObs,yObs);
 		proyectil=null;
-		imagenDeFondo= Herramientas.cargarImagen("fondo.jpg");		
+		imagenDeFondo= Herramientas.cargarImagen("fondo.jpg");
+		Random random = new Random();
+		for(int i=0; i<5; i++) {
+			obstaculos[i] = new Obstaculos(random.nextInt(0,ancho) , random.nextInt(0,altura));
+		}
 	
 		// Inicia el juego!
 		this.entorno.iniciar();
@@ -71,7 +74,7 @@ public class Juego extends InterfaceJuego {
 		entorno.escribirTexto("Vidas de Mikasa= " + mikasa.vidas, 50, 20);
 		entorno.escribirTexto("Tiempo= " + (int)tiempo, 650, 20);
 		entorno.escribirTexto("Enemigos asesinados= "+ contadorDeAsesinatos, 320, 20);
-
+		
 //		instrucciones de Objetos
 		if((mikasa.bigMikasa==false) && ((int) tiempo%10==0)){
 			crearObjeto=true;
@@ -81,10 +84,11 @@ public class Juego extends InterfaceJuego {
 			objetos=new Objetos(xObj,yObj);
 			objetos.dibujarse(entorno);
 		}
+		
 //		instrucciones de Mikasa
 		mikasa.dibujarse(entorno);
 		
-		if((objetos!=null) && (mikasa.colisinaObjeto(objetos))){
+		if(mikasa.colisinaObjeto(objetos)){
 			mikasa.alto=70;
 			mikasa.ancho=55;
 			mikasa.bigMikasa=true;
@@ -159,8 +163,12 @@ public class Juego extends InterfaceJuego {
 		enemigos.dibujarse(entorno);
 //		movimiento de enemigos hacia Mikasa
 		enemigos.moverse(mikasa.x, mikasa.y, obstaculos);
+//		instrucciones de Objetos
+		objetos.dibujarse(entorno);
 //		instrucciones de Obstaculos
-		obstaculos.dibujarse(entorno);
+		for (int i=0; i<obstaculos.length ;i++) {
+			entorno.dibujarImagen(obstaculos[i].imagenCasa, obstaculos[i].x, obstaculos[i].y, 0, 0.13);
+		}
 //		instrucciones de Proyectil
 		if((entorno.estaPresionada(entorno.TECLA_ESPACIO)) && (mikasa.bigMikasa==false)) {
 			proyectil= new Proyectil (mikasa.x, mikasa.y, mikasa.angulo);
@@ -183,13 +191,11 @@ public class Juego extends InterfaceJuego {
 				System.out.println("toca enemigo");
 			}
 		}
-//		Arma de mikasa
 		if(mikasa.bigMikasa==false){
 		arma= new Arma(mikasa.x, mikasa.y, mikasa.angulo);
 		arma.dibujarse(entorno);
 		}
 	
-
 		
 	}
 		

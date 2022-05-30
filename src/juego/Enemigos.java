@@ -47,6 +47,13 @@ public class Enemigos {
 		}
 		return "";
 	}
+	public String[] tocaAlgunObstaculo(Obstaculos[] obstaculos, double valorEnCos, double valorEnSen) {
+		String[] arr = new String[obstaculos.length];
+		for(int i=0; i< obstaculos.length ;i++) {
+			arr[i] = tocaObstaculo(obstaculos[i], valorEnCos, valorEnSen);
+		}
+		return arr;
+	}
 	public String dondeTocaEnemigo(Mikasa mikasa) {
 		if(((this.y + this.alto/2) >= mikasa.y) && ((this.y - this.alto/2) <= mikasa.y)) {
 			if((this.x + this.ancho/2) <= (mikasa.x - mikasa.ancho/2)) {
@@ -68,8 +75,15 @@ public class Enemigos {
 		
 		return "";
 	}
-	
-	public void moverse(double x, double y, Obstaculos obstaculo) {
+	public int indiceCadenaEnArreglo(String[] arr, String cadena) {
+		for(int i=0; i<arr.length ;i++) {
+			if(arr[i].equals(cadena)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	public void moverse(double x, double y, Obstaculos[] obstaculos) {
 		double movEnX, movEnY;
 		double moverAlTocarObs = 1.0;
 		
@@ -84,19 +98,23 @@ public class Enemigos {
 			movEnY = this.y + Math.cos(this.angulo)*(-0.5);
 		}
 		
-		String tocaObs = tocaObstaculo(obstaculo, movEnX, movEnY);
+		String[] tocaObs = tocaAlgunObstaculo(obstaculos, movEnX, movEnY);
 		
-		if (tocaObs == "") {
+		if (indiceCadenaEnArreglo(tocaObs, "abajo") != -1) {
+			this.x-= moverAlTocarObs;
+//			tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
+		} else if ((indiceCadenaEnArreglo(tocaObs, "der") != -1)) {
+			this.y+= moverAlTocarObs;
+//			tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
+		} else if ((indiceCadenaEnArreglo(tocaObs, "izq") != -1)) {
+			this.y-= moverAlTocarObs;
+//			tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
+		} else if ((indiceCadenaEnArreglo(tocaObs, "arriba") != -1)) {
+			this.x-= moverAlTocarObs;
+//			tocaObs[indiceCadenaEnArreglo(tocaObs, "abajo")] = "";
+		} else {
 			this.x = movEnX;
 			this.y = movEnY;
-		} else if (tocaObs == "der") {
-			this.y+= moverAlTocarObs;
-		} else if (tocaObs == "izq") {
-			this.y-= moverAlTocarObs;
-		} else if (tocaObs == "arriba") {
-			this.x+= moverAlTocarObs;
-		} else {
-			this.x-= moverAlTocarObs;
 		}
 		
 	}

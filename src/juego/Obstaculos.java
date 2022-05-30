@@ -18,9 +18,4 @@ public class Obstaculos {
 		imagenCasa=Herramientas.cargarImagen("casa.png");
 	}
 	
-	public void dibujarse(Entorno e) {
-//		e.dibujarRectangulo(x, y, ancho, alto, 0, color);
-		e.dibujarImagen(imagenCasa, this.x, this.y, 0, 0.13);
-	}
-	
 }
