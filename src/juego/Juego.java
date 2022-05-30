@@ -67,7 +67,15 @@ public class Juego extends InterfaceJuego {
 			entorno.escribirTexto("GAME OVER", 340, 270);
 			return;
 		}
-
+		Random random = new Random();
+		int segJuego = (int) ((System.nanoTime())/(1000000000*10));
+		if(segJuego%3==0) {
+			for(int i=0; i<enemigos.length; i++) {
+				if(enemigos[i]==null) {
+					enemigos[i] = new Enemigos(random.nextInt(0,ancho) , random.nextInt(0,altura));
+				}
+			}
+		}
 		if(contadorDeAsesinatos==10){
 			entorno.escribirTexto("Victoria derrotaste a todos los titanes", 320, 270);
 			return;
