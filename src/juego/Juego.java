@@ -45,7 +45,8 @@ public class Juego extends InterfaceJuego {
 		for(int i=0; i<5; i++) {
 			obstaculos[i] = new Obstaculos(random.nextInt(0,ancho) , random.nextInt(0,altura));
 		}
-	
+
+		Herramientas.loop("MusicaFondo.aiff");
 		// Inicia el juego!
 		this.entorno.iniciar();
 	}
@@ -88,7 +89,7 @@ public class Juego extends InterfaceJuego {
 //		instrucciones de Mikasa
 		mikasa.dibujarse(entorno);
 		
-		if(mikasa.colisinaObjeto(objetos)){
+		if((objetos!=null) && (mikasa.colisinaObjeto(objetos))){
 			mikasa.alto=70;
 			mikasa.ancho=55;
 			mikasa.bigMikasa=true;
@@ -96,6 +97,7 @@ public class Juego extends InterfaceJuego {
 			crearObjeto=false;
 			xObj=numero.nextInt(ancho);
 			yObj=numero.nextInt(altura);
+			Herramientas.play("TomarPocion.aiff");
 		}
 		if(mikasa.tocaEnemigo(enemigos)) {
 			double moverAlTocarObj = 100.0;
@@ -104,6 +106,7 @@ public class Juego extends InterfaceJuego {
 			
 			if(mikasa.bigMikasa==false){
 				mikasa.vidas-=1;
+				Herramientas.play("Golpe.aiff");
 //				System.out.println("entro al if lado:");
 				if (tocaEnemigo == "der") {
 					mikasa.x += moverAlTocarObj;
@@ -129,6 +132,7 @@ public class Juego extends InterfaceJuego {
 				mikasa.y+=50;
 				mikasa.bigMikasa=false;
 				contadorDeAsesinatos+=1;
+				Herramientas.play("GolpeEnemigo.aiff");
 			}
 		}
 
@@ -163,8 +167,6 @@ public class Juego extends InterfaceJuego {
 		enemigos.dibujarse(entorno);
 //		movimiento de enemigos hacia Mikasa
 		enemigos.moverse(mikasa.x, mikasa.y, obstaculos);
-//		instrucciones de Objetos
-		objetos.dibujarse(entorno);
 //		instrucciones de Obstaculos
 		for (int i=0; i<obstaculos.length ;i++) {
 			entorno.dibujarImagen(obstaculos[i].imagenCasa, obstaculos[i].x, obstaculos[i].y, 0, 0.13);
@@ -172,6 +174,7 @@ public class Juego extends InterfaceJuego {
 //		instrucciones de Proyectil
 		if((entorno.estaPresionada(entorno.TECLA_ESPACIO)) && (mikasa.bigMikasa==false)) {
 			proyectil= new Proyectil (mikasa.x, mikasa.y, mikasa.angulo);
+			Herramientas.play("Disparo.aiff");
 		}
 		if(proyectil!=null){
 			proyectil.dibujarse(entorno);
@@ -183,10 +186,12 @@ public class Juego extends InterfaceJuego {
 				
 			if((proyectil != null) && (proyectil.tocaObstaculo(obstaculos))){
 				proyectil=null;	
+				Herramientas.play("GolpeMadera.aiff");
 				System.out.println("Toca casa");
 			}
 			if((proyectil != null) && (proyectil.colisionaEnemigos(enemigos))){
 				proyectil=null;
+				Herramientas.play("GolpeEnemigo.aiff");
 				contadorDeAsesinatos+=1;
 				System.out.println("toca enemigo");
 			}
