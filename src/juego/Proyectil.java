@@ -10,10 +10,6 @@ public class Proyectil {
 	int ancho=5;
 	int alto=10;
 	Color color=new Color(255,255,255);
-	Mikasa mikasa;
-	Enemigos enemigos;
-	Entorno entorno;
-	Obstaculos obstaculos;
 	Image imagenProyectil;
 	public Proyectil (double x, double y, double angulo) {
 		this.x=x;

@@ -19,7 +19,7 @@ public class Mikasa {
 	Color color= new Color(255,200,0);
 	double valorEnCos = this.x;
 	double valorEnSen = this.y;
-	int vidas=300;
+	int vidas=3;
 	boolean bigMikasa=false;
 	
 	public Mikasa (double x, double y) {

@@ -10,7 +10,6 @@ public class Arma {
 	int ancho=20;
 	int alto=10;
     Color color= new Color(255,0,0);
-    Mikasa mikasa;
     Image arma;
 
 
@@ -27,7 +26,4 @@ public class Arma {
         entorno.dibujarImagen(arma, this.x+2, this.y+10, this.angulo, 0.1);
     }
 
-    public void moverse(){
-
-    }
 }

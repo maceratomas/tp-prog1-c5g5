@@ -117,22 +117,17 @@ public class Juego extends InterfaceJuego {
 			if(mikasa.bigMikasa==false){
 				mikasa.vidas-=1;
 				Herramientas.play("Golpe.aiff");
-//				System.out.println("entro al if lado:");
 				if (tocaEnemigo == "der") {
 					mikasa.x += moverAlTocarObj;
-//					System.out.println("der");
 				}
 				if (tocaEnemigo == "izq") {
 					mikasa.x -= moverAlTocarObj;
-//					System.out.println("izq");
 				}
 				if (tocaEnemigo == "arriba") {
 					mikasa.y -= moverAlTocarObj;
-//					System.out.println("arriba");
 				}
 				if (tocaEnemigo == "abajo"){
 					mikasa.y += moverAlTocarObj;
-//					System.out.println("abajo");
 				}
 			}
 			else{
@@ -218,7 +213,6 @@ public class Juego extends InterfaceJuego {
 				enemigos[i]=null;
 				Herramientas.play("GolpeEnemigo.aiff");
 				contadorDeAsesinatos+=1;
-				System.out.println("toca enemigo");
 			}
 		}
 //		Dibujo del arma
