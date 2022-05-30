@@ -16,8 +16,18 @@ public class Obstaculos {
 		imagenCasa=Herramientas.cargarImagen("casa.png");
 	}
 
-	public void SeSuperponen(){
-		
+	public boolean seSuperpone(Mikasa mikasa, Obstaculos[] obstaculos) {
+		for(int i=0; i<obstaculos.length ;i++) {
+			if(obstaculos[i]!=null) {
+				if(((obstaculos[i].x + obstaculos[i].ancho/2) >= (this.x - this.ancho/2))
+						&& ((this.x + this.ancho/2)<(obstaculos[i].x - obstaculos[i].ancho/2))
+						&& ((this.y + this.alto/2)>(obstaculos[i].y - obstaculos[i].alto/2))
+						&& ((this.y - this.alto/2)<(obstaculos[i].y + obstaculos[i].alto/2))) {				
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 }
